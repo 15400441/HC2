@@ -3,6 +3,7 @@ import { NavController, MenuController,Nav } from 'ionic-angular';
 import {ManageUserPage} from '../manageUser/manageUser';
 import {Http , Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {NgForm} from '@angular/forms';
 
 @Component({
   templateUrl: 'build/pages/manageBroker/manageBroker.html'
@@ -70,26 +71,23 @@ export class Tab1 {
       <ion-title>Star</ion-title>
     </ion-navbar>
   </ion-header>
-  <ion-content>
-    <ion-list>
 
-    <ion-item>
-      <ion-label stacked>Name</ion-label>
-      <ion-input type="text" [value]="name"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked>Email</ion-label>
-      <ion-input type="text" [value]="email"></ion-input>
-    </ion-item>
-
-  </ion-list>
-
-  <div padding>
-    <button primary block (click)='add($event)'>Add</button>
-  </div>
-
-  </ion-content>`
+  <ion-content class="addtrans">
+    <ion-list inset>
+        <form #f='ngForm' (ngSubmit)="onSubmit(f)">
+            <ion-item>
+                <ion-label floating>Name</ion-label>
+                <ion-input type="text" name="name" ngModel></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input type="text" name="email" ngModel></ion-input>
+            </ion-item>
+            <button block>
+                <ion-icon name="add"></ion-icon>Add</button>
+        </form>
+    </ion-list>
+</ion-content>`
 })
 export class Tab2 {
   name:any;
@@ -101,10 +99,9 @@ export class Tab2 {
   	this.email='';
   }
 
-  add(event)
-  {
-  	console.log(this.name);
-  	console.log(this.email);
+  onSubmit(f:NgForm) {
+    // let's log our findings
+    console.log('Form submission is ', f.value);
   }
 
 }
