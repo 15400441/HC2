@@ -8,11 +8,58 @@
 </ion-header>
 
 
+<ion-content>
 
-<ion-tabs tabsPlacement="top">
-  <ion-tab [root]="tab1Root" tabTitle="All Brokers" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="Edit Brokers" tabIcon="information-circle"></ion-tab>
-</ion-tabs>
+ <ion-toolbar [color]="isAndroid ? 'primary' : 'light'" no-border-top>
+    <ion-segment [(ngModel)]="manageBroker" [color]="isAndroid ? 'light' : 'primary'">
+      <ion-segment-button value="allBrokers" (click)='getBrokers()'>
+        Brokers
+      </ion-segment-button>
+      <ion-segment-button value="addBroker">
+        Add Broker
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+
+  <div [ngSwitch]="manageBroker">
+    <ion-list *ngSwitchCase="'allBrokers'">
+          <ion-searchbar (ionInput)="searchBroker($event)"></ion-searchbar>
+          <ion-list-header>
+		     Brokers
+		  </ion-list-header>
+		  <ion-item *ngFor="let broker of searchBrokers" (click)="getDetail(broker)"> {{broker.name}} </ion-item>
+    </ion-list>
+
+
+    <ion-list inset *ngSwitchCase="'addBroker'">
+          
+        <form #f='ngForm' (ngSubmit)="onSubmit(f)">
+            <ion-item>
+                <ion-label floating>Name</ion-label>
+                <ion-input type="text" name="name" ngModel></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input type="text" name="email" ngModel></ion-input>
+            </ion-item>
+            <button block>
+                <ion-icon name="add"></ion-icon>Add</button>
+        </form>
+   
+    </ion-list>
+  </div>
+
+</ion-content>
+
+
+
+
+
+
+
+
+
 
 
 
